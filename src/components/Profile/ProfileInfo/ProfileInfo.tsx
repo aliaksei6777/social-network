@@ -1,18 +1,15 @@
 import React from 'react';
-import s from './Profile.module.css';
-import {MyPosts} from "./MyPosts/MyPosts";
+import s from './ProfileInfo.module.css';
 
-export const Profile = () => {
+export const ProfileInfo = () => {
     return (
         <div>
-            <ProfileInfo/>
-            <div>
+            <div className={s.imgBackground}>
                 <img src="https://html5css.ru/css/img_forest.jpg" alt=""/>
             </div>
-            <div>
+            <div className={s.descriptionBlock}>
                 ava+description
             </div>
-            <MyPosts/>
         </div>
     );
 }

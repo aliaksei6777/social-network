@@ -1,29 +1,27 @@
 import React from 'react';
 import s from './Profile.module.css';
+import {MyPosts} from "./MyPosts/MyPosts";
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
+import { PostType} from "../../redux/state";
 
-export const Profile = () => {
+export type PostAddPostType = {
+    posts: Array<PostType>
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
+}
+
+export const Profile: React.FC<PostAddPostType> = (props) => {
+
     return (
-        <div className={s.content}>
-            <div>
-                <img src="https://html5css.ru/css/img_forest.jpg" alt=""/>
-            </div>
-            <div>
-                ava+description
-            </div>
-            <div>
-                My post
-                <div>
-                    New post
-                </div>
-                <div className={s.posts}>
-                    <div className={s.item}>
-                        post1
-                    </div>
-                    <div className={s.item}>
-                        post2
-                    </div>
-                </div>
-            </div>
+        <div>
+            <ProfileInfo/>
+            <MyPosts
+                posts={props.posts}
+                addPost={props.addPost}
+                newPostText={props.newPostText}
+                updateNewPostText={props.updateNewPostText}
+        />
         </div>
     );
 }

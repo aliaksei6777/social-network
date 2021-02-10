@@ -1,11 +1,15 @@
-import React from 'react';
-import s from './Dialogs.module.css'
+import React, {useState} from 'react';
 
-export const Dialogs = () => {
+export const News = () => {
+    const [count, setCount] = useState(0)
     return (
         <div>
-            Dialogs
+            News
+            <p>Вы кликнули {count} раз(а)</p>
+            <button onClick={() => setCount(count + 1)}>
+                Нажми на меня
+            </button>
         </div>
-    )
+    );
 
 }

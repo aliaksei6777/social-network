@@ -1,0 +1,17 @@
+.sidebar {
+    grid-area: n;
+    margin-top: 200px;
+    padding: 20px;
+}
+
+.sidebar img {
+    width: 40px;
+}
+
+.friend {
+    display: flex;
+    color: white;
+}
+h3 {
+    text-align: center;
+}
