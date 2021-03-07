@@ -19,7 +19,7 @@ export const Navbar = () => {
                 <NavLink to={"/music"} activeClassName={s.active}>Music</NavLink>
             </div>
             <div className={s.item}>
-                <a>Settings</a>
+                <NavLink to={"/settings"} activeClassName={s.active}>Settings</NavLink>
             </div>
             {/*<div className={s.item}>*/}
             {/*    <a><h2><Friends/></h2></a>*/}

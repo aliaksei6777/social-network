@@ -1,14 +1,10 @@
 import React from 'react';
 import s from '../Friends.module.css';
-
-type DialogItemTypes = {
-    name: string
-    id: number
-    ava: string
-};
+import {DialogType} from "../../../redux/state";
 
 
-export const Friend: React.FC<DialogItemTypes>  = (props) => {
+
+export const Friend: React.FC<DialogType>  = (props) => {
 
     return (
         <div>

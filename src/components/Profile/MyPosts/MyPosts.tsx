@@ -1,34 +1,33 @@
-import React, {createRef} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {PostAddPostType} from "../Profile";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/state";
 
 
 export const MyPosts: React.FC<PostAddPostType> = (props) => {
 
+    const postsElements = props.posts.map(p => <Post message={p.message} id={p.id} likeCount={p.likeCount}/>);
 
-    let postsElements = props.posts.map(p => <Post message={p.message} id={p.id} likeCount={p.likeCount}/> );
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
-
-    let addPost = () => {
-        if (newPostElement.current) {
-            props.addPost()
-        }
-    };
-    let onPostChange = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current.value
-            props.updateNewPostText(text);
-        }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {if (e.key === "Enter") {addPost()} }
+    const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        // props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: e.currentTarget.value})
+        props.dispatch(updateNewPostTextAC(e.currentTarget.value))
     }
+    const addPost = () => {
+        // props.dispatch({type: "ADD-POST"})
+        props.dispatch(addPostAC())
+    };
+
+
     return (
         <div className={s.postsBlock}>
-            <h3>My post</h3>
+            My post
             <div>
+                <textarea onChange={newTextChangeHandler} onKeyPress={onKeyPressHandler}  value={props.newPostText}/>
                 <div>
-                    <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText}/>
+                    <button onClick={addPost}>Add post</button>
                 </div>
-                <button onClick={addPost}>Add post</button>
             </div>
             <div className={s.posts}>
                 {postsElements}
