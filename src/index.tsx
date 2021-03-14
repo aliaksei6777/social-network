@@ -16,7 +16,6 @@ let rerenderTree = () => {
 
 }
 
-
 rerenderTree();
 
 store.subscribe(rerenderTree)

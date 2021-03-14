@@ -24,10 +24,6 @@ const App: React.FC<AppTypes> = (props) => {
                 <Friends dialogs={props.store._state.dialogPage.dialogs}/>
                 <div className={'app-wrapper-content'}>
                     <Route path={'/dialogs'} render={() => <Dialogs
-                        // dialogs={props.store._state.dialogPage.dialogs}
-                        // messages={props.store._state.dialogPage.messages}
-                        // newMessage={props.store._state.dialogPage.newMessageText}
-                        // dispatch={props.store.dispatch.bind(props.store)}
                         store={props.store}
                     />}/>
                     <Route path={'/profile'} render={() => <Profile

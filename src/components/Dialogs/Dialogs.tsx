@@ -2,20 +2,10 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {
-    ActionTypes,
-    sendMessageAC,
-    DialogType,
-    MessageType,
-    updateNewMessageTextAC,
-    StoreType
-} from "../../redux/state";
+import {StoreType} from "../../redux/state";
+import {sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
 
 type DialogsPropsType = {
-    // dialogs: Array<DialogType>
-    // messages: Array<MessageType>
-    // newMessage: string
-    // dispatch: (action: ActionTypes) => void
     store: StoreType
 }
 
@@ -29,7 +19,6 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
             sendMessage()
         }
     }
-
     const sendMessage = () => {
         // props.dispatch({type: "ADD-MESSAGE-TEXT"})
         props.store.dispatch(sendMessageAC())
@@ -45,10 +34,10 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 {dialogsElements}
             </div>
             <div className={s.messages}>
-                {messagesElement}
-                <textarea onChange={onMessageChange} onKeyPress={onKeyPressHandler} value={state.newMessageText}/>
+                <div>{messagesElement}</div>
                 <div>
-                    <button onClick={sendMessage}>Send message</button>
+                    <div><textarea onChange={onMessageChange} onKeyPress={onKeyPressHandler} value={state.newMessageText}/></div>
+                    <div><button onClick={sendMessage}>Send message</button></div>
                 </div>
             </div>
         </div>

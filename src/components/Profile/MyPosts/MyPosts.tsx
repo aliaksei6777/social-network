@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {PostAddPostType} from "../Profile";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/state";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
 
 
 export const MyPosts: React.FC<PostAddPostType> = (props) => {
