@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {ActionTypes, addMessageAC, DialogType, MessageType, updateNewMessageTextAC} from "../../redux/state";
+import {ActionTypes, sendMessageAC, DialogType, MessageType, updateNewMessageTextAC} from "../../redux/state";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>
@@ -18,13 +18,13 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
-            addMessage()
+            sendMessage()
         }
     }
 
-    const addMessage = () => {
-        // props.dispatch({type: "ADD-MESSAGE"})
-        props.dispatch(addMessageAC())
+    const sendMessage = () => {
+        // props.dispatch({type: "ADD-MESSAGE-TEXT"})
+        props.dispatch(sendMessageAC())
     }
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         // props.dispatch({type: "UPDATE-NEW-MESSAGE-TEXT" , value: e.currentTarget.value})
@@ -40,7 +40,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 {messagesElement}
                 <textarea onChange={onMessageChange} onKeyPress={onKeyPressHandler} value={props.newMessage}/>
                 <div>
-                    <button onClick={addMessage}>Send message</button>
+                    <button onClick={sendMessage}>Send message</button>
                 </div>
             </div>
         </div>

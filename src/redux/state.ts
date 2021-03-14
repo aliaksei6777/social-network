@@ -1,5 +1,11 @@
 import {stringify} from "querystring";
 
+const ADD_POST = 'ADD_POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SEND = 'SEND-MESSAGE-TEXT';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+
+
 export type MessageType = {
     id: number
     message: string
@@ -17,7 +23,7 @@ export type PostType = {
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessage: string
+    newMessageText: string
 }
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -31,7 +37,7 @@ export type RootStateType = {
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextAC>
-type AddMessageActionType = ReturnType<typeof addMessageAC>
+type AddMessageActionType = ReturnType<typeof sendMessageAC>
 type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageTextAC>
 
 export type ActionTypes = AddPostActionType | UpdateNewPostTextType | AddMessageActionType | UpdateNewMessageTextType
@@ -77,7 +83,7 @@ const store: StoreType = {
                 {id: 2, message: "Hello!!"},
                 {id: 3, message: "Hello!!"},
             ],
-            newMessage: ''
+            newMessageText: ''
         },
     },
     getState() {
@@ -100,17 +106,18 @@ const store: StoreType = {
             this._onChange()
         }
         else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = action.newText;
+            this._state.profilePage.newPostText = action.newPostText;
             this._onChange();
         }
-        else if (action.type === "ADD-MESSAGE") {
-            let newMessage = {id: 4, message: this._state.dialogPage.newMessage};
-            this._state.dialogPage.messages.push(newMessage)
-            this._state.dialogPage.newMessage = ''
-            this._onChange();
-        }
+
         else if (action.type === "UPDATE-NEW-MESSAGE-TEXT") {
-            this._state.dialogPage.newMessage = action.value;
+            this._state.dialogPage.newMessageText = action.newMessageText;
+            this._onChange();
+        }
+        else if (action.type === "SEND-MESSAGE") {
+            let newMessage = {id: 4, message: this._state.dialogPage.newMessageText};
+            this._state.dialogPage.messages.push(newMessage)
+            this._state.dialogPage.newMessageText = ''
             this._onChange();
         }
     }
@@ -121,23 +128,21 @@ export const addPostAC = ()=> {
         type: "ADD-POST"
     } as const
 }
-export const updateNewPostTextAC = (value: string) => {
-    return {
+export const updateNewPostTextAC = (value: string) => ({
         type: "UPDATE-NEW-POST-TEXT",
-        newText: value
-    } as const
-}
+        newPostText: value
+    }) as const
 
-export const addMessageAC = () => {
+
+export const sendMessageAC = () => {
     return {
-        type: "ADD-MESSAGE"
+        type: "SEND-MESSAGE"
     } as const
 }
-
 export const updateNewMessageTextAC = (value: string) => {
     return {
         type: "UPDATE-NEW-MESSAGE-TEXT",
-        value: value
+        newMessageText: value
     } as const
 }
 
