@@ -128,9 +128,9 @@ export const addPostAC = ()=> {
         type: "ADD-POST"
     } as const
 }
-export const updateNewPostTextAC = (value: string) => ({
+export const updateNewPostTextAC = (newPostText: string) => ({
         type: "UPDATE-NEW-POST-TEXT",
-        newPostText: value
+        newPostText: newPostText
     }) as const
 
 
@@ -139,10 +139,10 @@ export const sendMessageAC = () => {
         type: "SEND-MESSAGE"
     } as const
 }
-export const updateNewMessageTextAC = (value: string) => {
+export const updateNewMessageTextAC = (newMessageText: string) => {
     return {
         type: "UPDATE-NEW-MESSAGE-TEXT",
-        newMessageText: value
+        newMessageText: newMessageText
     } as const
 }
 
