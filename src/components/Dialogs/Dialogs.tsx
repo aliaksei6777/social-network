@@ -2,17 +2,27 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {StoreType} from "../../redux/state";
-import {sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
 
+type DialogType = {
+    id: number
+    name: string
+    ava: string
+}
+type MessageType = {
+    id: number
+    message: string
+}
 type DialogsPropsType = {
-    store: StoreType
+    newMessageText: string
+    dialogs: DialogType[]
+    messages: MessageType[]
+    updateNewMessageText: (text: string) => void
+    sendMessage: () => void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
-    const state = props.store.getState().dialogPage
-    const dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} ava={d.ava}/>);
-    const messagesElement = state.messages.map(m => <Message message={m.message} id={m.id}/>);
+    const dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id} ava={d.ava}/>);
+    const messagesElement = props.messages.map(m => <Message message={m.message} id={m.id}/>);
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
@@ -20,12 +30,10 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         }
     }
     const sendMessage = () => {
-        // props.dispatch({type: "ADD-MESSAGE-TEXT"})
-        props.store.dispatch(sendMessageAC())
+        props.sendMessage()
     }
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        // props.dispatch({type: "UPDATE-NEW-MESSAGE-TEXT" , value: e.currentTarget.value})
-        props.store.dispatch(updateNewMessageTextAC(e.currentTarget.value))
+        props.updateNewMessageText(e.currentTarget.value)
     }
 
     return (
@@ -36,8 +44,14 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
             <div className={s.messages}>
                 <div>{messagesElement}</div>
                 <div>
-                    <div><textarea onChange={onMessageChange} onKeyPress={onKeyPressHandler} value={state.newMessageText}/></div>
-                    <div><button onClick={sendMessage}>Send message</button></div>
+                    <div><textarea value={props.newMessageText}
+                                   onChange={onMessageChange}
+                                   onKeyPress={onKeyPressHandler}
+                    />
+                    </div>
+                    <div>
+                        <button onClick={sendMessage}>Send message</button>
+                    </div>
                 </div>
             </div>
         </div>

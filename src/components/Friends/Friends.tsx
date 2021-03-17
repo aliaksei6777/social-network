@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Friends.module.css';
 import {Friend} from "./Friend/Friend";
-import {DialogType} from "../../redux/state";
+import {DialogType} from "../../redux/store";
 
 type FriendsPageType = {
     dialogs: Array<DialogType>
