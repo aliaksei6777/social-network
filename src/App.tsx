@@ -8,26 +8,18 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Friends} from "./components/Friends/Friends";
 import Settings from "./components/Settings/Settings";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-type AppTypes = {
-    store: any
-}
-
-const App: React.FC<AppTypes> = (props) => {
+const App = () => {
 
     return (
             <div className={'app-wrapper'}>
                 <Header/>
                 <Navbar/>
-                <Friends dialogs={props.store.getState().dialogPage.dialogs}/>
+                {/*<Friends dialogs={props.store.getState().dialogPage.dialogs}/>*/}
                 <div className={'app-wrapper-content'}>
-                    <Route path={'/dialogs'} render={() => <DialogsContainer
-                        store={props.store}
-                    />}/>
-                    <Route path={'/profile'} render={() => <Profile
-                        store={props.store}
-                    />}
+                    <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
+                    <Route path={'/profile'} render={() => <Profile/>}
                     />
                     <Route path={'/news'} render={() => <News/>}/>
                     <Route path={'/music'} render={() => <Music/>}/>

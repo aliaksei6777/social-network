@@ -34,8 +34,8 @@ export type RootStateType = {
     dialogPage: DialogPageType
     sidebar: SidebarPageType
 }
-export type ActionTypes = AddPostActionType | UpdateNewPostTextType | AddMessageActionType | UpdateNewMessageTextType
-export type StoreType = {
+type ActionTypes = AddPostActionType | UpdateNewPostTextType | AddMessageActionType | UpdateNewMessageTextType
+type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _onChange: () => void

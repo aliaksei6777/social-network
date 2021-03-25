@@ -1,10 +1,7 @@
-import {ActionTypes} from "./store";
-
+import {AddPostActionType, UpdateNewPostTextType} from "./profile-reducer";
 
 const SEND_MESSAGE = 'SEND-MESSAGE-TEXT';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-export type AddMessageActionType = ReturnType<typeof sendMessageAC>
-export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageTextAC>
 export const sendMessageAC = () => {
     return {
         type: SEND_MESSAGE,
@@ -17,6 +14,10 @@ export const updateNewMessageTextAC = (newMessageText: string) => {
     } as const
 }
 
+export type AddMessageActionType = ReturnType<typeof sendMessageAC>
+export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageTextAC>
+export type ActionTypes = AddPostActionType | UpdateNewPostTextType | AddMessageActionType | UpdateNewMessageTextType
+
 type MessageType = {
     id: number
     message: string
@@ -26,12 +27,9 @@ type DialogType = {
     name: string
     ava: string
 }
-type InitialStateType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    newMessageText: string
-}
-const initialState: InitialStateType = {
+export type DialogsInitialStateType = typeof initialState
+
+const initialState = {
     dialogs: [
         {
             id: 1,
@@ -48,25 +46,25 @@ const initialState: InitialStateType = {
             name: "nick3",
             ava: 'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png'
         }
-    ],
+    ] as Array<DialogType>,
     messages: [
         {id: 1, message: "Hello!"},
         {id: 2, message: "Hello!!"},
         {id: 3, message: "Hello!!"},
-    ],
+    ] as Array<MessageType>,
     newMessageText: ''
 }
 
-const dialogsReducer = (state: InitialStateType = initialState, action: ActionTypes):InitialStateType => {
+const dialogsReducer = (state: DialogsInitialStateType = initialState, action: ActionTypes): DialogsInitialStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newMessageText;
-            return state;
+            return {...state, newMessageText: action.newMessageText}
         case SEND_MESSAGE:
-            let newMessage = {id: 4, message: state.newMessageText};
-            state.messages.push(newMessage)
-            state.newMessageText = ''
-            return state;
+            return {
+                ...state,
+                messages: [...state.messages, {id: 4, message: state.newMessageText}],
+                newMessageText: ''
+            }
         default:
             return state;
     }
