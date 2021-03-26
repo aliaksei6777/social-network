@@ -24,9 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         updateNewMessageText: (text: string) => {
             dispatch(updateNewMessageTextAC(text))
         },
-        sendMessage: () => {
-            dispatch(sendMessageAC())
-        }
+        sendMessage: () => {dispatch(sendMessageAC())}
     }
 }
 

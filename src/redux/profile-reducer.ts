@@ -14,7 +14,7 @@ export const updateNewPostTextAC = (newPostText: string) => ({
 
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextAC>
-type PostType = {
+export type PostType = {
     id: number
     message: string
     likeCount: number

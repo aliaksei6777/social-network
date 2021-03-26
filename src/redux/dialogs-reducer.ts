@@ -18,11 +18,11 @@ export type AddMessageActionType = ReturnType<typeof sendMessageAC>
 export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageTextAC>
 export type ActionTypes = AddPostActionType | UpdateNewPostTextType | AddMessageActionType | UpdateNewMessageTextType
 
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
 }
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
     ava: string

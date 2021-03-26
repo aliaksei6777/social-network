@@ -3,33 +3,33 @@ import profileReducer, {AddPostActionType, UpdateNewPostTextType} from "./profil
 import dialogsReducer, {AddMessageActionType, UpdateNewMessageTextType} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
     ava: string
 }
-export type PostType = {
+type PostType = {
     id: number
     message: string
     likeCount: number
 }
-export type DialogPageType = {
+type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
-export type SidebarPageType = {
+type SidebarPageType = {
 
 }
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogPage: DialogPageType
     sidebar: SidebarPageType
@@ -99,4 +99,4 @@ const store: StoreType = {
 
 
 
-export default store;
+// export default store;

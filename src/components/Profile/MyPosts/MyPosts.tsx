@@ -3,19 +3,6 @@ import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 
-// type PostType = {
-//     id: number
-//     message: string
-//     likeCount: number
-// }
-// type MyPostsPropsType = {
-//     newPostText: string
-//     posts: PostType[]
-//     addPost: () => void
-//     updateNewPostText: (text: string) => void
-//
-// }
-
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const postsElements = props.profilePage.posts.map(p => <Post message={p.message} id={p.id} likeCount={p.likeCount}/>);
