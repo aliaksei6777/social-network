@@ -22,8 +22,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        updateNewPostText: (text: string) => {dispatch(updateNewPostTextAC(text))},
-        addPost: () => {dispatch(addPostAC())}
+        updateNewPostText: (text: string) => dispatch(updateNewPostTextAC(text)),
+        addPost: () => dispatch(addPostAC())
     }
 }
 
