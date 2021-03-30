@@ -20,6 +20,7 @@ export type PostType = {
     likeCount: number
 }
 export type ProfileInitialStateType = typeof initialState
+
 const initialState = {
     posts: [
         {id: 1, message: "Hi how are you?", likeCount: 10},
