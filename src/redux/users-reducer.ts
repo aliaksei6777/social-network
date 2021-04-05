@@ -27,13 +27,14 @@ type LocationType =  {
     city: string
     country: string
 }
+
 export type UserType = {
     id: number
-    photoUrl: string
+    photos: {[key: string]: string}
     followed: boolean
-    fullName: string
+    name: string
     status: string
-    location: LocationType
+    location?: LocationType
 }
 export type UsersInitialStateType = {
     users: Array<UserType>
