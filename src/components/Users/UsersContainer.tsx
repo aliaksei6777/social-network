@@ -10,8 +10,8 @@ import {
     unfollowAC,
     UserType
 } from "../../redux/users-reducer";
-import UsersC from "./Users";
-
+import axios from "axios";
+import Users from "./Users";
 
 type MapStatePropsType = {
     users: Array<UserType>
@@ -26,8 +26,36 @@ type mapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
 }
+export type UsersApiComponentsPropsType = MapStatePropsType & mapDispatchToPropsType
 
-export type UsersPropsType = MapStatePropsType & mapDispatchToPropsType
+
+class UsersContainer extends React.Component<UsersApiComponentsPropsType> {
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount - 11250)
+            });
+    }
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            });
+    }
+    render() {
+        return <Users users={this.props.users}
+                      totalUsersCount={this.props.totalUsersCount}
+                      pageSize={this.props.pageSize}
+                      currentPage={this.props.currentPage}
+                      onPageChanged={this.onPageChanged}
+                      follow={this.props.follow}
+                      unFollow={this.props.unFollow}/>
+    }
+}
+
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -59,4 +87,4 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersC)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
