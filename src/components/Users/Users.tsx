@@ -13,9 +13,11 @@ type UsersPropsType = {
     unFollow: (userId: number) => void
 }
 
-const Users:React.FC<UsersPropsType> = ({users,totalUsersCount,pageSize,
-                                            currentPage,onPageChanged,
-                                            follow,unFollow}) => {
+const Users: React.FC<UsersPropsType> = ({
+                                             users, totalUsersCount, pageSize,
+                                             currentPage, onPageChanged,
+                                             follow, unFollow
+                                         }) => {
 
     const pagesCount = Math.ceil((totalUsersCount) / pageSize)
     const pages = []
@@ -26,7 +28,8 @@ const Users:React.FC<UsersPropsType> = ({users,totalUsersCount,pageSize,
     return <div>
         <div>
             {pages.map(p => {
-                return <span className={currentPage === p ? styles.selectedPage : ""}
+                return <span key={p}
+                             className={currentPage === p ? styles.selectedPage : ""}
                              onClick={() => {onPageChanged(p)}}
                 >{p + " "}</span>
             })}

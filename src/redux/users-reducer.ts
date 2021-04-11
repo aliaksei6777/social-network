@@ -4,15 +4,17 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS_COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
 
 export type FollowActionType = ReturnType<typeof followAC>
 export type UnfollowActionType = ReturnType<typeof unfollowAC>
 export type SetUsersActionType = ReturnType<typeof setUsersAC>
 export type setCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
 export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountAC>
+export type setIsFetchingActionType = ReturnType<typeof setIsFetchingAC>
 
 type ActionTypes = FollowActionType | UnfollowActionType | SetUsersActionType
-    | setCurrentPageActionType | setTotalUsersCountActionType
+    | setCurrentPageActionType | setTotalUsersCountActionType | setIsFetchingActionType
 type LocationType =  {
     city: string
     country: string
@@ -31,6 +33,7 @@ export type UsersInitialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 
 }
 
@@ -38,7 +41,8 @@ const initialState: UsersInitialStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 21,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 const usersReducer = (state: UsersInitialStateType = initialState, action: ActionTypes): UsersInitialStateType => {
@@ -63,6 +67,9 @@ const usersReducer = (state: UsersInitialStateType = initialState, action: Actio
         }
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.totalUsersCount}
+        }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
         }
         default:
             return state;
@@ -90,6 +97,10 @@ export const setCurrentPageAC = (currentPage: number) => ({
 export const setTotalUsersCountAC = (totalUsersCount: number) => ({
     type: SET_TOTAL_USERS_COUNT,
     totalUsersCount
+}) as const
+export const setIsFetchingAC = (isFetching: boolean) => ({
+    type: TOGGLE_IS_FETCHING,
+    isFetching
 }) as const
 
 export default usersReducer;
