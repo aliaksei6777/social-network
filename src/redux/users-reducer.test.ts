@@ -1,8 +1,8 @@
 import usersReducer, {
-    followAC,
-    setCurrentPageAC, setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC,
+    follow,
+    setCurrentPage, setTotalUsersCount,
+    setUsers,
+    unFollow,
     UsersInitialStateType,
     UserType
 } from "./users-reducer";
@@ -58,7 +58,7 @@ beforeEach(() => {
 
 test('user should be followed', () => {
 
-    const endState = usersReducer(initialState, followAC(4))
+    const endState = usersReducer(initialState, follow(4))
 
     expect(endState.users[3].followed).toBe(true)
     expect(endState.users[0].followed).toBe(false)
@@ -66,7 +66,7 @@ test('user should be followed', () => {
 
 test('user should be unfollowed', () => {
 
-    const endState = usersReducer(initialState, unfollowAC(2))
+    const endState = usersReducer(initialState, unFollow(2))
 
     expect(endState.users[1].followed).toBe(false)
     expect(endState.users[0].followed).toBe(false)
@@ -115,7 +115,7 @@ test('correct array of users should be added', () => {
             "followed": false
         }]
 
-    const endState = usersReducer(initialState, setUsersAC(newUsers))
+    const endState = usersReducer(initialState, setUsers(newUsers))
 
     expect(endState.users[0].name).toBe('newUser1')
     expect(endState.users[3].name).toBe('newUser4')
@@ -124,7 +124,7 @@ test('correct array of users should be added', () => {
 
 test('property page should setted to current page', () => {
 
-    const endState = usersReducer(initialState, setCurrentPageAC(10))
+    const endState = usersReducer(initialState, setCurrentPage(10))
 
     expect(endState.currentPage).toBe(10)
     expect(endState.pageSize).toBe(5)
@@ -133,7 +133,7 @@ test('property page should setted to current page', () => {
 
 test('property total users count should setted', () => {
 
-    const endState = usersReducer(initialState, setTotalUsersCountAC(50))
+    const endState = usersReducer(initialState, setTotalUsersCount(50))
 
     expect(endState.currentPage).toBe(2)
     expect(endState.pageSize).toBe(5)
