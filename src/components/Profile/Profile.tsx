@@ -1,12 +1,15 @@
 import React from 'react';
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {ProfileApiComponentsPropsType} from "./ProfileContainer";
 
-export const Profile = () => {
+
+
+export const Profile = (props: ProfileApiComponentsPropsType) => {
 
     return (
         <div>
-            <ProfileInfo/>
+            {props.profile && <ProfileInfo profile={props.profile}/>}
             <MyPostsContainer/>
         </div>
     );

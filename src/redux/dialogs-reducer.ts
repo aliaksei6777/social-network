@@ -1,4 +1,4 @@
-import {AddPostActionType, UpdateNewPostTextType} from "./profile-reducer";
+import {AddPostActionType, UpdateNewPostTextActionType} from "./profile-reducer";
 
 const SEND_MESSAGE = 'SEND-MESSAGE-TEXT';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
@@ -16,7 +16,7 @@ export const updateNewMessageTextAC = (newMessageText: string) => {
 
 export type AddMessageActionType = ReturnType<typeof sendMessageAC>
 export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageTextAC>
-export type ActionTypes = AddPostActionType | UpdateNewPostTextType | AddMessageActionType | UpdateNewMessageTextType
+export type ActionTypes = AddMessageActionType | UpdateNewMessageTextType
 
 export type MessageType = {
     id: number
