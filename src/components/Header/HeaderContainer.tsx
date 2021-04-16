@@ -14,6 +14,7 @@ type mapDispatchToPropsType = {
     setAuthUserData: (id: null | number,
                        email: null | string,
                        login: null | string) => void
+
 }
 export type AuthApiComponentsPropsType = MapStatePropsType & mapDispatchToPropsType
 
@@ -38,6 +39,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login
+
     }
 }
 export default connect(mapStateToProps,{setAuthUserData})(HeaderContainer);

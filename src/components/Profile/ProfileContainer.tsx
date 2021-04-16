@@ -7,10 +7,11 @@ import {connect} from "react-redux";
 import {ProfileType, setUserProfile} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter } from 'react-router-dom';
 
+
 type MapStatePropsType = {
     profile: ProfileType | null
     myId: null | number
-    isAuth: boolean
+
 
 }
 type mapDispatchToPropsType = {
@@ -43,8 +44,7 @@ class ProfileContainer extends React.Component<ProfileApiComponentsPropsType> {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
-    myId: state.auth.id,
-    isAuth: state.auth.isAuth
+    myId: state.auth.id
 })
 
 
