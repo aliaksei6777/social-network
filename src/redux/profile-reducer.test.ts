@@ -9,7 +9,8 @@ beforeEach(() => {
             {id: 2, message: "It's my first post!", likeCount: 15},
             {id: 3, message: "It's my second post!", likeCount: 35},
         ]as Array<PostType>,
-        newPostText: 'Hello! How are you?'
+        newPostText: 'Hello! How are you?',
+        profile: null
     }
 })
 

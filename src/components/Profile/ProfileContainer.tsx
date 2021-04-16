@@ -9,6 +9,9 @@ import {RouteComponentProps, withRouter } from 'react-router-dom';
 
 type MapStatePropsType = {
     profile: ProfileType | null
+    myId: null | number
+    isAuth: boolean
+
 }
 type mapDispatchToPropsType = {
     setUserProfile: (profile: ProfileType) => void
@@ -24,7 +27,7 @@ export type ProfileApiComponentsPropsType = MapStatePropsType & mapDispatchToPro
 class ProfileContainer extends React.Component<ProfileApiComponentsPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) {userId = "2"}
+        if (!userId && this.props.myId) {userId = this.props.myId.toString()}
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
             .then(response => {
                 this.props.setUserProfile(response.data)
@@ -38,8 +41,10 @@ class ProfileContainer extends React.Component<ProfileApiComponentsPropsType> {
     }
 };
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    profile: state.profilePage.profile
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+    profile: state.profilePage.profile,
+    myId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 
 
