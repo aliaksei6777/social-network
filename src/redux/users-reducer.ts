@@ -15,11 +15,11 @@ export type setIsFetchingActionType = ReturnType<typeof toggleIsFetching>
 
 type ActionTypes = FollowActionType | UnfollowActionType | SetUsersActionType
     | setCurrentPageActionType | setTotalUsersCountActionType | setIsFetchingActionType
+
 type LocationType =  {
     city: string
     country: string
 }
-
 export type UserType = {
     id: number
     photos: {[key: string]: string | null}
