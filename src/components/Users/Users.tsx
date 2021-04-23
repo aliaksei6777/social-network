@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/avatar.png";
 import {UserType} from "../../redux/users-reducer";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 
 type UsersPropsType = {
@@ -13,45 +13,62 @@ type UsersPropsType = {
     onPageChanged: (pageNumber: number) => void
     follow: (userId: number) => void
     unFollow: (userId: number) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    followingInProgress: number[]
 }
 
 const Users: React.FC<UsersPropsType> = ({
                                              users, totalUsersCount, pageSize,
                                              currentPage, onPageChanged,
-                                             follow, unFollow
+                                             follow, unFollow, toggleFollowingProgress, followingInProgress
                                          }) => {
 
     const pagesCount = Math.ceil((totalUsersCount) / pageSize)
     const pages = []
-    for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+    }
 
     return <div>
         <div>
             {pages.map(p => {
                 return <span key={p}
                              className={currentPage === p ? styles.selectedPage : ""}
-                             onClick={() => {onPageChanged(p)}}>{p + " "}</span>})}
+                             onClick={() => {
+                                 onPageChanged(p)
+                             }}>{p + " "}</span>
+            })}
         </div>
         {
             users.map(u => <div key={u.id}>
                 <span>
                     <div>
                         <NavLink to={'/profile/' + u.id}>
-                            <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto} alt={""}/>
+                            <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto}
+                                 alt={""}/>
                         </NavLink>
                     </div>
                     <div>
                         {u.followed
-                            ? <button onClick={() => {
-                                usersAPI.unFollowUser(u.id).then(data =>
-                                    {if (data.resultCode === 0) {
-                                            unFollow(u.id)}});}}
-                                >Unfollow</button>
-                            : <button onClick={() => {
-                                usersAPI.followUser(u.id).then(data =>
-                                    {if (data.resultCode === 0) {
-                                            follow(u.id)}});
-                                }}>Follow</button>}
+                            ? <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
+                                toggleFollowingProgress(true, u.id)
+                                usersAPI.unFollowUser(u.id).then(data => {
+                                    if (data.resultCode === 0) {
+                                        unFollow(u.id)
+                                    }
+                                    toggleFollowingProgress(false, u.id)
+                                });
+                            }}
+                            >Unfollow</button>
+                            : <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
+                                toggleFollowingProgress(true, u.id)
+                                usersAPI.followUser(u.id).then(data => {
+                                    if (data.resultCode === 0) {
+                                        follow(u.id)
+                                    }
+                                    toggleFollowingProgress(false, u.id)
+                                });
+                            }}>Follow</button>}
                     </div>
                 </span>
                 <span>
