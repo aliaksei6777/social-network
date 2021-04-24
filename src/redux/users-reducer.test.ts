@@ -1,8 +1,8 @@
 import usersReducer, {
-    follow,
+    followSuccess,
     setCurrentPage, setTotalUsersCount,
     setUsers,
-    unFollow,
+    unFollowSuccess,
     UsersInitialStateType,
     UserType
 } from "./users-reducer";
@@ -59,7 +59,7 @@ beforeEach(() => {
 
 test('user should be followed', () => {
 
-    const endState = usersReducer(initialState, follow(4))
+    const endState = usersReducer(initialState, followSuccess(4))
 
     expect(endState.users[3].followed).toBe(true)
     expect(endState.users[0].followed).toBe(false)
@@ -67,7 +67,7 @@ test('user should be followed', () => {
 
 test('user should be unfollowed', () => {
 
-    const endState = usersReducer(initialState, unFollow(2))
+    const endState = usersReducer(initialState, unFollowSuccess(2))
 
     expect(endState.users[1].followed).toBe(false)
     expect(endState.users[0].followed).toBe(false)

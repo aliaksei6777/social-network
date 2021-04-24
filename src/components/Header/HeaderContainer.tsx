@@ -1,7 +1,6 @@
 import React from 'react';
 import s from './Header.module.css';
 import {Header} from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {setAuthUserData} from "../../redux/auth-reducer";
@@ -15,7 +14,6 @@ type mapDispatchToPropsType = {
     setAuthUserData: (id: null | number,
                        email: null | string,
                        login: null | string) => void
-
 }
 export type AuthApiComponentsPropsType = MapStatePropsType & mapDispatchToPropsType
 
