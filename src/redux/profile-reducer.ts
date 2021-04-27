@@ -1,5 +1,5 @@
-import {Dispatch} from "redux";
 import {usersAPI} from "../api/api";
+import {AppThunk} from "./redux-store";
 
 export type PostType = {
     id: number
@@ -35,7 +35,7 @@ export type AddPostActionType = ReturnType<typeof addPostAC>
 export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 export type SetUserProfileActionType = ReturnType<typeof setUserProfile>
 
-type ActionTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileActionType
+export type ProfileActionsTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileActionType
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -51,7 +51,7 @@ const initialState = {
     profile: null as ProfileType | null
 }
 
-const profileReducer = (state: ProfileInitialStateType = initialState, action: ActionTypes): ProfileInitialStateType => {
+const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionsTypes): ProfileInitialStateType => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -70,14 +70,19 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
 }
 
 export const addPostAC = () => ({type: ADD_POST} as const )
+
 export const updateNewPostTextAC = (newPostText: string) =>
     ({type: UPDATE_NEW_POST_TEXT, newPostText: newPostText} as const)
+
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
-export const getUserProfile = (userId: string) => (dispatch: Dispatch) => {
-    usersAPI.getProfileUser(userId).then(data => {
-            dispatch(setUserProfile(data))
-        }
-    );
+
+export const getUserProfile = (userId: string): AppThunk => async dispatch => {
+    try {
+        const res = await usersAPI.getProfileUser(userId)
+        dispatch(setUserProfile(res))
+    } catch (e) {
+        throw new Error(e)
+    }
 }
 
 export default profileReducer;

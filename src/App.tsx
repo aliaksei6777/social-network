@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {Route} from 'react-router-dom';
+import {HashRouter, Route} from 'react-router-dom';
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Friends} from "./components/Friends/Friends";
@@ -14,6 +14,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 const App = () => {
 
     return (
+        <HashRouter>
             <div className={'app-wrapper'}>
                 <HeaderContainer/>
                 <Navbar/>
@@ -28,6 +29,8 @@ const App = () => {
                     <Route path={'/settings'} render={() => <Settings/>}/>
                 </div>
             </div>
+        </HashRouter>
+
     );
 }
 

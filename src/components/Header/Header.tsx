@@ -5,7 +5,6 @@ import {AuthApiComponentsPropsType} from "./HeaderContainer";
 
 
 export const Header = (props: AuthApiComponentsPropsType) => {
-    debugger
     return (
         <header className={s.header}>
             <img

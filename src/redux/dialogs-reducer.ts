@@ -1,4 +1,3 @@
-import {AddPostActionType, UpdateNewPostTextActionType} from "./profile-reducer";
 
 const SEND_MESSAGE = 'SEND-MESSAGE-TEXT';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
