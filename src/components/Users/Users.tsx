@@ -3,7 +3,6 @@ import styles from "./users.module.css";
 import userPhoto from "../../assets/images/avatar.png";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -26,7 +25,7 @@ const Users: React.FC<UsersPropsType> = ({users, totalUsersCount, pageSize,
     for (let i = 1; i <= 10; i++) {
         pages.push(i);
     }
-
+    console.log(followingInProgress)
     return <div>
         <div>
             {pages.map(p => {

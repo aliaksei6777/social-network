@@ -77,12 +77,8 @@ export const updateNewPostTextAC = (newPostText: string) =>
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 
 export const getUserProfile = (userId: string): AppThunk => async dispatch => {
-    try {
         const res = await usersAPI.getProfileUser(userId)
         dispatch(setUserProfile(res))
-    } catch (e) {
-        throw new Error(e)
-    }
 }
 
 export default profileReducer;

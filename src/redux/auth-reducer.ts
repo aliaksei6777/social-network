@@ -1,4 +1,4 @@
-import {authAPI} from "../api/api";
+ import {authAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 const SET_USER_DATA = 'SET-USER-DATA';
