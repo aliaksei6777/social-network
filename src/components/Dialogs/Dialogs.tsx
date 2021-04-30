@@ -4,6 +4,7 @@ import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {DialogsPropsType} from "./DialogsContainer";
 
+
 export const Dialogs: React.FC<DialogsPropsType> = ({dialogPage,updateNewMessageText, sendMessage }) => {
     const dialogsElements = dialogPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} ava={d.ava}/>);
     const messagesElement = dialogPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>);

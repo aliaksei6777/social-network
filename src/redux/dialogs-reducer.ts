@@ -1,20 +1,10 @@
 
 const SEND_MESSAGE = 'SEND-MESSAGE-TEXT';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-export const sendMessageAC = () => {
-    return {
-        type: SEND_MESSAGE,
-    } as const
-}
-export const updateNewMessageTextAC = (newMessageText: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newMessageText: newMessageText
-    } as const
-}
 
-export type AddMessageActionType = ReturnType<typeof sendMessageAC>
-export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageTextAC>
+
+export type AddMessageActionType = ReturnType<typeof sendMessage>
+export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageText>
 export type ActionTypes = AddMessageActionType | UpdateNewMessageTextType
 
 export type MessageType = {
@@ -68,4 +58,8 @@ export const dialogsReducer = (state: DialogsInitialStateType = initialState, ac
             return state;
     }
 }
+
+export const sendMessage = () => ({type: SEND_MESSAGE} as const )
+export const updateNewMessageText = (newMessageText: string) => ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText} as const )
+
 export default dialogsReducer;

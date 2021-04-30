@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {Profile} from "./Profile";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {getUserProfile, ProfileType} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+import { compose } from 'redux';
 
 type MapDispatchToPropsType = {
     getUserProfile: (userId: string) => void
@@ -39,6 +40,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     myId: state.auth.id,
     // isAuth: state.auth.isAuth
 })
-const WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default withAuthRedirect(connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent));
+export default compose<ComponentType>(
+    connect(mapStateToProps, {getUserProfile}), withRouter, withAuthRedirect)
+(ProfileContainer)
