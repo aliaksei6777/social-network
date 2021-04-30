@@ -16,9 +16,7 @@ export type ServerData = {
     'totalCount': number
     'error': null | string
 }
-// type CommonResponseType = {
-//     data: ServerData
-// }
+
 
 const instance = axios.create({
     withCredentials: true,

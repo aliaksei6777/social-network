@@ -1,23 +1,21 @@
 import React from 'react';
 import {Profile} from "./Profile";
 import {AppStateType} from "../../redux/redux-store";
-import {connect, ConnectedProps} from "react-redux";
+import {connect} from "react-redux";
 import {getUserProfile, ProfileType} from "../../redux/profile-reducer";
-import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 
-
-type MapStatePropsType = {
-    profile: ProfileType | null
-    myId: null | number
-    isAuth: boolean
+type MapDispatchToPropsType = {
+    getUserProfile: (userId: string) => void
 }
 type PathParamsType = {
     userId: string
 }
-type ProfilePropsType = ConnectedProps<typeof connectAll>
-export type ProfileApiComponentsPropsType = ProfilePropsType & RouteComponentProps<PathParamsType>
+type ProfilePropsType = MapDispatchToPropsType & MapStatePropsType
+type PropsType = ProfilePropsType & RouteComponentProps<PathParamsType>
 
-class ProfileContainer extends React.Component<ProfileApiComponentsPropsType> {
+class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId && this.props.myId) {
@@ -26,19 +24,21 @@ class ProfileContainer extends React.Component<ProfileApiComponentsPropsType> {
         this.props.getUserProfile(userId)
     }
     render() {
-        if (!this.props.isAuth) return <Redirect to={'/login'}/>
-        return (
-            <Profile {...this.props} profile={this.props.profile}/>
-        );
+        return <Profile {...this.props} profile={this.props.profile}/>
     }
 };
 
+
+type MapStatePropsType = {
+    profile: ProfileType | null
+    myId: null | number
+    // isAuth: boolean
+}
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
     myId: state.auth.id,
-    isAuth: state.auth.isAuth
+    // isAuth: state.auth.isAuth
 })
-const connectAll = connect(mapStateToProps, {getUserProfile})
 const WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connectAll(WithUrlDataContainerComponent);
+export default withAuthRedirect(connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent));
