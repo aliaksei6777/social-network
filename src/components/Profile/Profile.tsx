@@ -8,7 +8,6 @@ type ProfilePropsType = {
     profile: ProfileType | null
 }
 export const Profile = (props: ProfilePropsType) => {
-
     return (
         <div>
             {props.profile && <ProfileInfo profile={props.profile}/>}
