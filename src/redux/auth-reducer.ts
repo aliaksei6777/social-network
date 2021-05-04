@@ -34,16 +34,11 @@ const authReducer = (state: AuthInitialStateType = initialState, action: AuthAct
 export const setAuthUserData = (id: null | number, email: null | string, login: null | string) =>
     ({type: SET_USER_DATA, data: {id, email, login}} as const)
 
-export const getAuthUserData = ():AppThunk => async dispatch => {
-    try {
-        const res = await authAPI.me()
-        if(res.resultCode === 0){
-            let {id, email, login} = res.data
-            dispatch(setAuthUserData(id, email, login ))
-        }
-    } catch (e) {
-        throw new Error(e)
-    }
-}
-
+ export const getAuthUserData = (): AppThunk => async dispatch => {
+     const res = await authAPI.me()
+     if (res.resultCode === 0) {
+         let {id, email, login} = res.data
+         dispatch(setAuthUserData(id, email, login))
+     }
+ }
 export default authReducer;

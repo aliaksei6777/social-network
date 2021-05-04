@@ -19,13 +19,11 @@ const Users: React.FC<UsersPropsType> = ({users, totalUsersCount, pageSize,
                                              currentPage, onPageChanged,
                                              follow, unFollow, followingInProgress
                                          }) => {
-
-    // const pagesCount = Math.ceil((totalUsersCount) / pageSize)
+    const pagesCount = Math.ceil((totalUsersCount) / pageSize)
     const pages = []
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
-    console.log(followingInProgress)
     return <div>
         <div>
             {pages.map(p => {

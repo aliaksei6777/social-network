@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ProfileType} from "../redux/profile-reducer";
 
 export type ItemType = {
     'name': string
@@ -37,11 +38,23 @@ export const usersAPI = {
     follow (userId: number) {
         return instance.post(`follow/${userId}`).then(response => response.data)
     },
-    getProfileUser (userId: string) {
-        return instance.get(`profile/` + userId).then(response => response.data)
+    getProfileUser (userId: number) {
+        console.warn('Obsolete method. Please use profile API object')
+        return profileAPI.getProfile(userId)
     }
 }
 
+export const profileAPI = {
+    getProfile (userId: number) {
+        return instance.get<ProfileType>(`profile/` + userId).then(response => response.data)
+    },
+    getStatus (userId: number) {
+        return instance.get<string>(`profile/status/` + userId).then(response => response.data)
+    },
+    updateStatus (status: string){
+        return instance.put(`profile/status`, {status: status})
+    }
+}
 
 export const authAPI = {
     me () {
