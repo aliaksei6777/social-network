@@ -1,11 +1,8 @@
 
 const SEND_MESSAGE = 'SEND-MESSAGE-TEXT';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-
 
 export type AddMessageActionType = ReturnType<typeof sendMessage>
-export type UpdateNewMessageTextType = ReturnType<typeof updateNewMessageText>
-export type ActionTypes = AddMessageActionType | UpdateNewMessageTextType
+export type ActionTypes = AddMessageActionType
 
 export type MessageType = {
     id: number
@@ -40,26 +37,22 @@ const initialState = {
         {id: 1, message: "Hello!"},
         {id: 2, message: "Hello!!"},
         {id: 3, message: "Hello!!"},
-    ] as Array<MessageType>,
-    newMessageText: ''
+    ] as Array<MessageType>
 }
 
 export const dialogsReducer = (state: DialogsInitialStateType = initialState, action: ActionTypes): DialogsInitialStateType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return {...state, newMessageText: action.newMessageText}
         case SEND_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, {id: 4, message: state.newMessageText}],
-                newMessageText: ''
+                messages: [...state.messages, {id: 4, message: action.newMessageText}]
             }
         default:
             return state;
     }
 }
 
-export const sendMessage = () => ({type: SEND_MESSAGE} as const )
-export const updateNewMessageText = (newMessageText: string) => ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText} as const )
+export const sendMessage = (newMessageText: string) => ({type: SEND_MESSAGE, newMessageText} as const )
+
 
 export default dialogsReducer;

@@ -1,38 +1,40 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-export const  MyPosts: React.FC<MyPostsPropsType> = ({profilePage, updateNewPostText, addPost }) => {
+export const  MyPosts: React.FC<MyPostsPropsType> = ({profilePage, addPostAC }) => {
 
     const postsElements = profilePage.posts.map(p => <Post key={p.id} message={p.message} id={p.id} likeCount={p.likeCount}/>);
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter") {
-            addPostClick()
-        }
-    }
-    const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value)
-    }
-    const addPostClick = () => {
-        addPost()
+
+    const addPostClick = (formData: PostsFormDataType) => {
+        addPostAC(formData.newPostText)
     };
 
     return (
         <div className={s.postsBlock}>
             My post
-            <div>
-                <textarea value={profilePage.newPostText}
-                          onChange={newTextChangeHandler}
-                          onKeyPress={onKeyPressHandler}
-                />
-                <div>
-                    <button onClick={addPostClick}>Add post</button>
-                </div>
-            </div>
+            <AddPostFormRedux onSubmit={addPostClick}/>
             <div className={s.posts}>
                 {postsElements}
             </div>
         </div>
     );
 }
+
+
+type PostsFormDataType = {newPostText: string}
+
+const AddNewPostForm:React.FC<InjectedFormProps<PostsFormDataType>> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+                <Field component="textarea" name="newPostText" placeholder="enter message"/>
+            <div>
+                <button>Add post</button>
+            </div>
+        </form>
+    )
+}
+
+const AddPostFormRedux = reduxForm<PostsFormDataType>({form: "profileAddNewPostForm"})(AddNewPostForm)
