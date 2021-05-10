@@ -6,6 +6,7 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
+
 export const  MyPosts: React.FC<MyPostsPropsType> = ({profilePage, addPostAC }) => {
 
     const postsElements = profilePage.posts.map(p => <Post key={p.id} message={p.message} id={p.id} likeCount={p.likeCount}/>);

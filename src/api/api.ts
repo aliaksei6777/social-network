@@ -2,21 +2,33 @@ import axios from "axios";
 import {ProfileType} from "../redux/profile-reducer";
 
 export type ItemType = {
-    'name': string
-    'id': number
-    'uniqueUrlName': null | string
-    'photos': {
-        'small': null | string
-        'large': null | string
+    name: string
+    id: number
+    uniqueUrlName: null | string
+    photos: {
+        small: null | string
+        large: null | string
     },
-    'status': null | string
-    'followed': boolean
+    status: null | string
+    followed: boolean
 }
-export type ServerData = {
-    'items': ItemType[]
-    'totalCount': number
-    'error': null | string
+export type GetItemsType = {
+    items: ItemType[]
+    totalCount: number
+    error: null | string
 }
+type AuthDataType = {
+    id: number
+    email: string
+    login: string
+}
+type ResponseType<T = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: T
+}
+
 
 
 const instance = axios.create({
@@ -30,7 +42,7 @@ const instance = axios.create({
 export const usersAPI = {
     getUsers (currentPage = 1, pageSize = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then((response) => response.data as ServerData)
+            .then((response) => response.data as GetItemsType)
     },
     unFollow (userId: number) {
         return instance.delete(`follow/${userId}`).then(response => response.data)
@@ -52,12 +64,19 @@ export const profileAPI = {
         return instance.get<string>(`profile/status/` + userId).then(response => response.data)
     },
     updateStatus (status: string){
-        return instance.put(`profile/status`, {status: status})
+        return instance.put<ResponseType>(`profile/status`, {status: status})
     }
 }
 
+
 export const authAPI = {
     me () {
-        return instance.get("auth/me").then(response => response.data)
+        return instance.get<ResponseType<AuthDataType>>("auth/me")
     },
+    login(email: string, password: string, rememberMe: boolean = false) {
+        return instance.post<ResponseType<{userId: number}>>("auth/login",{email,password,rememberMe})
+    },
+    logout(){
+        return instance.delete<ResponseType>("auth/login")
+    }
 }
