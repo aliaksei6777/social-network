@@ -1,5 +1,7 @@
  import {authAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+ import {stopSubmit} from "redux-form";
+ import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'SET-USER-DATA';
 
@@ -42,11 +44,14 @@ export const setAuthUserData = (id: null | number, email: null | string, login: 
      }
  }
 
- export const login = (email: string, password: string, rememberMe: boolean):AppThunk => async dispatch => {
+ export const login = (email: string, password: string, rememberMe: boolean):AppThunk => async (dispatch: Dispatch<any>) => {
     const res = await authAPI.login(email, password,rememberMe)
      if (res.data.resultCode === 0) {
         dispatch(getAuthUserData())
-    }
+    } else {
+         let messages = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
+         dispatch(stopSubmit('login', {_error: messages}))
+     }
  }
 
  export const logout = ():AppThunk => async dispatch => {
