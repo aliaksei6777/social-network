@@ -9,16 +9,13 @@ type MapStatePropsType = {
     login: string | null
 }
 type MapsDispatchToProps = {
-    getAuthUserData: () => void
     logout: () => void
 }
 export type AuthApiComponentsPropsType = MapsDispatchToProps & MapStatePropsType
 
 
 class HeaderContainer extends React.Component<AuthApiComponentsPropsType> {
-    componentDidMount() {
-        this.props.getAuthUserData()
-    }
+
     render () {
         return <Header {...this.props}/>
     };
